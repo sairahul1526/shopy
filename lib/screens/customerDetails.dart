@@ -9,6 +9,7 @@ import 'package:shopy/utils/utils.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'dart:async';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class CustomerDetailsActivity extends StatefulWidget {
   final Customer customer;
@@ -317,31 +318,41 @@ class CustomerDetailsActivityState extends State<CustomerDetailsActivity>
                       ? new Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            new FlatButton(
-                              child: new Center(
-                                child: new Text(
+                            new Expanded(
+                              child: new FlatButton(
+                                child: new AutoSizeText(
                                   customer.email,
+                                  maxLines: 1,
+                                  minFontSize: 10,
+                                  maxFontSize: 18,
+                                  overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
-                                      fontSize: 15, color: Colors.blue),
+                                    fontSize: 18,
+                                    color: Colors.blue,
+                                  ),
                                 ),
+                                onPressed: () {
+                                  sendMail(customer.email, "", "");
+                                },
                               ),
-                              onPressed: () {
-                                sendMail(customer.email, "", "");
-                              },
                             ),
-                            new FlatButton(
-                              child: new Center(
+                            new Expanded(
+                              child: new FlatButton(
                                 child: new Text(
                                   customer.phone,
-                                  textAlign: TextAlign.right,
+                                  maxLines: 1,
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                      fontSize: 15, color: Colors.blue),
+                                    fontSize: 15,
+                                    color: Colors.blue,
+                                  ),
                                 ),
+                                onPressed: () {
+                                  makePhone(customer.phone);
+                                },
                               ),
-                              onPressed: () {
-                                makePhone(customer.phone);
-                              },
                             )
                           ],
                         )

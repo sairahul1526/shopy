@@ -57,25 +57,29 @@ class CartActivityState extends State<CartActivity> {
       context,
       MaterialPageRoute(builder: (context) => page),
     ) as List<dynamic>;
-    if (data != null && data.length > 0) {
-      type = data[0];
-      amount = data[1];
+    setState(() {
+      if (data != null && data.length > 0) {
+        type = data[0];
+        amount = data[1];
 
-      if (type) {
-        discount = double.parse(
-            (double.parse(amount) * calculatetotal() / 100).toStringAsFixed(2));
-        percentage = double.parse(double.parse(amount).toStringAsFixed(2));
+        if (type) {
+          discount = double.parse(
+              (double.parse(amount) * calculatetotal() / 100)
+                  .toStringAsFixed(2));
+          percentage = double.parse(double.parse(amount).toStringAsFixed(2));
+        } else {
+          discount = double.parse(double.parse(amount).toStringAsFixed(2));
+          percentage = double.parse(
+              (double.parse(amount) * 100 / calculatetotal())
+                  .toStringAsFixed(2));
+        }
       } else {
-        discount = double.parse(double.parse(amount).toStringAsFixed(2));
-        percentage = double.parse(
-            (double.parse(amount) * 100 / calculatetotal()).toStringAsFixed(2));
+        type = true;
+        amount = "";
+        percentage = 0;
+        discount = 0;
       }
-    } else {
-      type = true;
-      amount = "";
-      percentage = 0;
-      discount = 0;
-    }
+    });
   }
 
   addNote(BuildContext context, Widget page) async {
@@ -83,11 +87,13 @@ class CartActivityState extends State<CartActivity> {
       context,
       MaterialPageRoute(builder: (context) => page),
     ) as String;
-    if (data != null && data.length > 0) {
-      note = data;
-    } else {
-      note = "";
-    }
+    setState(() {
+      if (data != null && data.length > 0) {
+        note = data;
+      } else {
+        note = "";
+      }
+    });
   }
 
   addCustomer(BuildContext context, Widget page) async {
@@ -95,11 +101,13 @@ class CartActivityState extends State<CartActivity> {
       context,
       MaterialPageRoute(builder: (context) => page),
     ) as Customer;
-    if (data != null) {
-      customer = data;
-    } else {
-      customer = null;
-    }
+    setState(() {
+      if (data != null) {
+        customer = data;
+      } else {
+        customer = null;
+      }
+    });
   }
 
   editQuantity(BuildContext context, Widget page) async {
@@ -291,7 +299,8 @@ class CartActivityState extends State<CartActivity> {
                                       ),
                                     ),
                                     new Container(
-                                      width: MediaQuery.of(context).size.width * 0.01,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.01,
                                     ),
                                     new Expanded(
                                       child: new Column(
@@ -359,7 +368,8 @@ class CartActivityState extends State<CartActivity> {
                                       ),
                                     ),
                                     new Container(
-                                      width: MediaQuery.of(context).size.width * 0.01,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.01,
                                     ),
                                     new Text(
                                       "₹ " +
